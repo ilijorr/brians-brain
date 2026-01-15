@@ -69,6 +69,18 @@
 
 ---
 
+## Vizualizacija (10 poena)
+
+**Rust + Plotters biblioteka**
+- Učitaj stanja iz fajlova
+- Generiši frame-ove:
+  - Off (0): crna
+  - On (1): bela
+  - Dying (2): plava
+- Izvoz: PNG sekvenca ili GIF
+
+---
+
 ## Očekivani Rezultati
 
 **Speedup:**
