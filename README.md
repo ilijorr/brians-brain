@@ -69,7 +69,7 @@
 
 ---
 
-## Vizualizacija (10 poena)
+## Vizualizacija
 
 **Rust + Plotters biblioteka**
 - Učitaj stanja iz fajlova
