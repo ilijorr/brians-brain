@@ -71,13 +71,20 @@
 
 ## Vizualizacija
 
-**Rust + Plotters biblioteka**
-- Učitaj stanja iz fajlova
-- Generiši frame-ove:
-  - Off (0): crna
-  - On (1): bela
-  - Dying (2): plava
-- Izvoz: PNG sekvenca ili GIF
+Konzolna animacija u terminalu. Boje: Off → crna, On → bela, Dying → plava.
+
+**Python:**
+```bash
+python python/sequential.py --size 100 --iterations 200 --output states.npy
+python python/visualize.py states.npy --delay 80 --loop
+```
+
+**Rust:**
+```bash
+cd rust && cargo build --release
+./target/release/brians-brain --mode seq --size 100 --iterations 200 --output states.bin
+./target/release/brians-brain --mode viz --input states.bin --delay 80 --loop
+```
 
 ---
 
@@ -90,3 +97,53 @@
 ---
 
 Ilija Jordanovski SV 73/2022
+
+---
+
+## Korišćenje
+
+### Python
+
+```bash
+# Sekvencijalna simulacija
+python python/sequential.py [--size N] [--iterations N] [--output FILE.npy] [--seed N]
+
+# Paralelna simulacija
+python python/parallel.py [--size N] [--iterations N] [--processes N] [--output FILE.npy] [--seed N]
+
+# Vizualizacija
+python python/visualize.py FILE.npy [--delay MS] [--loop]
+```
+
+Podrazumevane vrednosti: `--size 100`, `--iterations 100`, `--seed 42`, `--processes 4`, `--delay 50`
+
+### Rust
+
+```bash
+cd rust && cargo build --release
+
+# Sekvencijalna simulacija
+./target/release/brians-brain --mode seq [--size N] [--iterations N] [--seed N] [--output FILE.bin]
+
+# Paralelna simulacija
+./target/release/brians-brain --mode par [--size N] [--iterations N] [--seed N] [--threads N] [--output FILE.bin]
+
+# Vizualizacija
+./target/release/brians-brain --mode viz --input FILE.bin [--delay MS] [--loop]
+```
+
+Podrazumevane vrednosti: `--size 100`, `--iterations 100`, `--seed 42`, `--threads 4`, `--delay 50`  
+Napomena: `--input` je obavezan za `--mode viz`.
+
+### Benchmarkovi
+
+```bash
+python benchmark/run_all.py [--reps N] [--quick] [--skip-python] [--strong-only] [--weak-only]
+```
+
+- `--reps N` — broj ponavljanja (podrazumevano: 30)
+- `--quick` — kratak test
+- `--skip-python` — samo Rust benchmark
+- `--strong-only` / `--weak-only` — samo jako / slabo skaliranje
+
+Rezultati se čuvaju u `benchmark/results/`, grafici u `benchmark/plots/`.
